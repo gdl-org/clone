@@ -1,0 +1,24 @@
+name: "Clone Repo"
+description: "Clone an external Git repository"
+
+inputs:
+  repo:
+    description: "Git repository URL"
+    required: false
+    default: "https://codeberg.org/mikf/gallery-dl.git"
+  directory:
+    description: "Target directory"
+    required: false
+    default: "."
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: "Clone Git repository"
+      shell: bash
+      env:
+        REPOSITORY: ${{ inputs.repo }}
+        DIRECTORY: ${{ inputs.directory }}
+      run: |
+        git clone --depth 1 --no-tags "$REPOSITORY" "$DIRECTORY"
